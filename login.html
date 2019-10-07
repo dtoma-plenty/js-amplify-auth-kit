@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+      <title>Login</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="fonts/font-pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+      <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+      <link rel="stylesheet" href="js/lib/selectric/selectric.css">
+      <link rel="stylesheet" href="css/login.css">
+      <style type="text/css">
+        .fa, .fab, .fal, .far, .fas {
+            font-family: "FontAwesome";
+            font-style: normal !important;
+        }
+      </style>
+      <script th:inline="javascript">
+	  		var portal = [[${portal}]];
+      </script>
+   </head>
+   <body id="portalBody" onLoad="main.checkAuthOnLogin()"> 
+      <div class="ajax-loading-wrapper">
+         <div class="ajax-spinner-container">
+            <div class="ajax-spinner">
+               <div class="loader">Loading...</div>
+            </div>
+         </div>
+      </div>
+      <div class="form-wrapper">
+         <div class="form-logo"></div>
+         <div class="form-body">
+            <div class="registration-form">
+               <form method="post" action="">
+                  <h3 th:text="#{createAccount}"></h3>
+                  <div class="error-container"></div>
+                  <div class="form-group">
+                     <label th:text="#{nameLabel}"></label>
+                     <input type="text" name="name" th:placeholder="#{firstLastName}" maxlength="128" required th:title="#{stringRestriction}">                  
+                  </div>
+                  <div class="form-group mt-10">
+                     <span class="email-error"><span th:text="#{accountExists}"></span> <a href="#" class="sign-in-link" th:text="#{signInMessage}"></a></span>
+                     <label class="mt-10" th:text="#{businessEmailLabel}"></label>
+                     <input type="email" name="email" id="registration_email" required th:placeholder="#{emailAddressPlaceholder}">                   
+                  </div>
+                <div class="form-group mt-10">
+                     <label th:text="#{companyNameLabel}"></label>
+                     <input type="text" name="company_name" th:placeholder="#{companyNamePlaceholder}" maxlength="128" required th:title="#{stringRestriction}">
+                     
+                  </div>
+                   <div class="form-group mt-10">
+                     <label th:text="#{companyCode}"></label>
+                     <input type="text" name="company_code" th:placeholder="#{companyCodePlaceHolder}" maxlength="32" pattern="^[a-zA-Z0-9](?:[a-zA-Z0-9\\\\-]{0,61}[a-zA-Z0-9])?$" required th:title="#{companyCodeTitle}">
+                  </div>
+                  <div class="form-group mt">
+                     <span th:text="#{chooseNext1}"></span> <a href="#" th:text="#{privacyStatement}"></a> <span th:text="#{privacyStatement}"></span><span th:text="#{chooseNext2}"></span> <a href="#" th:text="#{termsAndConditions}"></a>
+                  </div>
+                  <div class="form-group mt">
+                     <div class="display-table">
+                        <div class="display-table-cell">
+                          <div class="button-neutral back-to-login" th:text="#{backButton}"></div>
+                        </div>
+                        <div class="display-table-cell">
+                          <button type="submit" class="registration-trigger" th:text="#{nextButton}"></button>
+                        </div>
+                      </div>
+                  </div>
+                  
+               </form>
+            </div>
+            <div class="reset-password-form">
+            </div>
+            
+            <div class="change-password-form">
+               <form autocomplete="off" method="post" action="">
+               <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <h3 th:text="#{createNewPassword}"></h3>
+                  <div class="error-container"></div>
+                  <div class="form-group mt-10">
+                     <label th:text="#{verificationCodeLabel}"></label>
+                     <input type="number" name="code" pattern= "[0-9]" oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Please fill out this field')" id="change_verification_code" placeholder="verification code" required title="Please enter between 1 and 128 numbers">
+                  </div>
+                  <div class="form-group mt-10">                     
+                     <label th:text="#{passwordLabel}"></label>
+                     <input type="password" name="password" id="change_password" required th:placeholder="#{newPasswordMsg}">
+                  </div>
+                  <div class="form-group" style="margin-top:8px">
+                     <div class="password-error-container" th:text="#{passwordMsg}"></div>
+                  </div>
+                  <div class="form-group mt-10">
+                     <label th:text="#{repeatLabel}"></label>
+                     <input type="password" name="password_repeat" id="change_repeat_password" th:placeholder="#{repeatLabel}"> 
+                  </div>
+                  <div class="form-group mt display-table">
+                     <div class="display-table-cell">
+                       <div class="button-neutral back-to-login" th:text="#{backButton}"></div>
+                     </div>
+                     <div class="display-table-cell">
+                       <button type="submit" class="change-password-trigger" th:text="#{changeButton}"></button>
+                     </div>
+                  </div>                  
+               </form>
+            </div>
+            <div class="confirmation-form">
+               <form method="post" action="">
+                  <h3 th:text="#{verifyEmail}"></h3>
+                  <div class="error-container"></div>
+                  <div class="form-group mt" th:text="#{registrationThankYou}">                     
+                  </div>
+                  <div class="form-group mt">
+                     <button type="submit" th:text="#{okButton}"></button>
+                  </div>                  
+               </form>
+            </div>
+            <div class="success-password-change">
+               <form method="post" action="">
+               <h3 th:text="#{successTitle}"></h3>
+               <div class="form-group mt" th:text="#{passwordChanged}">
+               </div>
+               <div class="form-group mt">
+                  <button class="back-to-login" th:text="#{backToLogin}"></button>
+               </div>
+               </form>
+            </div>
+            <div class="first-step">
+               <form method="post" action="">
+                  <h3 th:text="#{signInTitle}"></h3>
+                  <div class="sub-title" th:text="#{toEnter}"></div>
+                  <div class="error-container"></div>
+                  <div class="form-group">
+                     <input id="signInEmailInput" type="email" name="email" placeholder="Email address" autofocus>
+                  </div>
+                  <div class="form-group mt form-footer">
+                  	 <div class="display-table">
+                  	 	<div class="display-table-cell align-left">
+                  	 		<a href="#" class="create-account-link" th:text="#{createOne}"></a>
+                  	 	</div>
+                  	 	<div class="display-table-cell align-right">
+                     		<button id="signInNextBtn" type="submit" th:text="#{nextButton}"></button>                  	 		
+                  	 	</div>
+                  	 </div>
+                  </div>
+                  <div class="form-group mt form-footer-legal align-right">
+                  	 <a th:text="#{help}"></a>
+                 	 	<a th:text="#{privacy}"></a>
+                 	 	<a th:text="#{terms}"></a>
+                  </div>
+               </form>
+            </div>
+            <div class="second-step">
+               <form method="post" action="">
+                  <div class="second-step-form-banner">
+                  	<div>
+	                  	<div class="second-step-form-avatar">
+	                       <i class="fas fa-user fa-2x"></i>
+	                     </div>
+	                  </div>  
+	                  <div>
+	                  	<h3></h3>
+	                  </div>            
+                  </div>                  
+                  <div class="error-container"></div>
+                  <div class="form-group">
+                     <label th:text="#{enterPassword}"></label>
+                     <input type="hidden" name="user" required>
+                     <input type="hidden" name="email" required id="forgot_pass_email">
+                      <input type="hidden" name="clientId" required>
+                      <input type="hidden" name="userPoolId" required>
+                     <input id="signInPasswordInput" type="password" name="password" required placeholder="Password" autofocus>
+                  </div>
+                  <div class="form-group mt">
+                      <div class="display-table">
+                        <div class="display-table-cell align-left">
+                          <div class="button-neutral back-to-first-step" th:text="#{backButton}"></div>
+                        </div>
+                        <div class="display-table-cell align-right">
+                          <button type="submit" id="signInSubmitBtn" th:text="#{signInTitle}"></button>
+                        </div>
+                      </div>                     
+                  </div>                  
+                  <div class="form-group mt">
+                     <a href="#" class="reset-password-link" th:text="#{forgotPassword}"></a>
+                  </div>
+               </form>
+            </div>
+             <div class="third-step">
+               <form method="post" action="">
+                  <h3 th:text="#{createPasswordTitle}"></h3>
+                  <div class="error-container"></div>
+                  <div class="form-group">
+                     <label th:text="#{chooseNewPassword}">
+                     </label>    
+                     <input type="hidden" name="user">
+                     <input type="hidden" name="userPoolId" required>
+                     <input type="hidden" name="clientId" required>
+                     <input type="hidden" name="password" required>
+                     <input type="password" name="newPassword" required placeholder="Password">
+                  </div>
+                  <div class="form-group mt-10">
+                     <label th:text="#{repeatPassword}"></label>
+                     <input type="password" name="repeatPassword" required placeholder="Repeat password">
+                  </div>
+                  <div class="form-group mt">
+                      <div class="display-table">
+                        <div class="display-table-cell align-left">
+                          <div class="button-neutral back-to-second-step" th:text="#{backButton}"></div>
+                        </div>
+                        <div class="display-table-cell align-right">
+                          <button type="submit" th:text="#{signInTitle}"></button>
+                        </div>
+                      </div>                     
+                  </div>
+               </form>
+            </div>             
+         </div>
+      </div>      
+      <script type="text/javascript" src="js/lib/jquery-3.3.1.min.js"></script>
+      <script type="text/javascript" src="js/aws/amazon-cognito-identity.min.js"></script>
+      <script type="text/javascript" src="js/aws/aws-sdk.min.js"></script>  
+      <script type="text/javascript" src="js/lib/jwt-decode.min.js"></script>
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+      <script type="text/javascript" src="js/core/helpers.js"></script>            
+      <script type="text/javascript" src="js/lib/jquery.i18n.properties-1.0.9.js"></script>
+      <script type="text/javascript" src="js/lib/selectric/jquery.selectric.min.js"></script>
+    <script type="text/javascript" src="js/lib/nicescroll/jquery.nicescroll.min.js"></script>
+      <script type="text/javascript" src="js/public/main.js"></script>     
+      <script>
+	    function checkIfInsideFrame() {
+			if (window.frameElement) {
+				document.getElementById("portalBody").style.display="none";
+			    window.top.location.reload();
+			}
+			else {
+				document.getElementById("portalBody").style.display="block";
+			}
+		}
+		checkIfInsideFrame();
+	    </script>      
+   </body>
+</html>
