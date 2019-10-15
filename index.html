@@ -1,38 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Auth testing app</title>
-  <style type="text/css">
-  body {
-    opacity:0;
-  }
-  </style>
+<title>Login</title>
+<meta http-equiv="refresh" content="0;URL='login.html'" /> 
 </head>
 <body>
-  <pre>
-  You are logged in! This means that you have "_fpAuth" cookie with an unexpired access token.
-  Delete the cookies from the F12 -> Application -> Cookies to test the redirection to the login endpoint.
-  </pre>
-
-    <!-- Start authentication -->
-
-    <!-- Include jQuery dependency -->
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <!-- End incude jQuery -->
-    
-    <script>
-    var fpPortalConfig = {
-            loginEndpoint: "http://localhost:9001/portal-login-web/login.html",
-            refreshEndpoint: "",
-            awsCookieName : "_fpAuth",
-            awsRefreshCookieName : "_fpRefresh",
-            appLang: "en",
-            appName: "portal-one-web-dev"
-    }
-    </script>
-    <script type="text/javascript" src="http://localhost:9001/portal-login-web/js/public/kit.js"></script> 
-    
-    <!-- End authentication -->
 </body>
 </html>
