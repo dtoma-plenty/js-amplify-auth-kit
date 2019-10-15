@@ -8,8 +8,8 @@ var refreshToken = null;
 
 function isAuthenticated() {
     var queryString = helper.parseQueryString(window.location.href);
-	var access_token = helper.getCookie(fpPortalConfig.awsCookieName);
-	var refresh_token = helper.getCookie(fpPortalConfig.awsRefreshCookieName);
+	var access_token = queryString.access_token;
+	var refresh_token = queryString.refresh_token;
     var result = false;
     var token = access_token;
 
